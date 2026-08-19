@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>百度搜索</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+        }
+
+        .search-wrapper {
+            display: flex;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .search-input {
+            width: 420px;
+            height: 48px;
+            padding: 0 16px;
+            border: 2px solid #e0e0e0;
+            border-right: none;
+            border-radius: 24px 0 0 24px;
+            outline: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #4e6ef2;
+            box-shadow: 0 0 8px rgba(78, 110, 242, 0.3);
+        }
+
+        .search-btn {
+            width: 108px;
+            height: 48px;
+            border: none;
+            background: linear-gradient(135deg, #4e6ef2, #3b5bdb);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(135deg, #3b5bdb, #2f4ccc);
+        }
+
+        .search-btn:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body>
+
+    <form class="search-wrapper" onsubmit="return doSearch()">
+        <input
+            id="kw"
+            class="search-input"
+            type="text"
+            placeholder="请输入搜索内容"
+            autocomplete="off"
+        >
+        <button class="search-btn" type="submit">百度一下</button>
+    </form>
+
+    <script>
+        function doSearch() {
+            const keyword = document.getElementById("kw").value.trim();
+            if (!keyword) {
+                document.getElementById("kw").focus();
+                return false;
+            }
+            window.open("https://www.baidu.com/s?wd=" + encodeURIComponent(keyword), "_blank");
+            return false;
+        }
+    </script>
+
+</body>
+</html>
