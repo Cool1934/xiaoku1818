@@ -189,12 +189,10 @@
     padding:12px 14px; font-size:15px; margin-bottom:14px;
     -webkit-appearance:none;
   }
-  /* 自定义名称实时预览 */
   #namePreview{
     font-size:12px; color:#8e8e93; margin:-8px 0 14px; min-height:16px;
   }
   #namePreview b{ color:#007aff; }
-  /* 自定义图标上传 */
   .custom-icon-row{
     display:flex; align-items:center; gap:10px; margin-bottom:14px;
   }
@@ -253,13 +251,11 @@
       <label>网站链接</label>
       <input id="urlInput" type="url" placeholder="https://xiaoku1818.pages.dev/" autocomplete="off" spellcheck="false">
     </div>
-    <!-- 自定义名称 -->
     <div class="field">
       <label>自定义名称（可选）</label>
       <input id="nameInput" type="text" placeholder="留空则自动识别网站名" autocomplete="off" maxlength="20">
     </div>
     <div id="namePreview"></div>
-    <!-- 自定义图标 -->
     <div class="field">
       <label>自定义图标（可选）</label>
       <div class="custom-icon-row">
@@ -383,7 +379,6 @@
       return img;
     }
 
-    // 并行加载三级 favicon，谁先回来用谁
     var sources = iconSources(app.url);
     var loaded = false;
     sources.forEach(function(src){
@@ -483,10 +478,11 @@
     save(); render();
   }
 
-  /* ===== 长按进入编辑模式（红叉） ===== */
+  /* ===== 长按进入编辑模式（红叉）===== */
   var longTimer = null;
 
   grid.addEventListener("pointerdown", function(ev){
+    if(isPhone) return; // ✅ 手机版不走 pointerdown
     var appEl = ev.target.closest && ev.target.closest(".app:not(.add-app)");
     if(!appEl) return;
     if(document.body.classList.contains("edit")) return;
@@ -514,6 +510,24 @@
         document.body.classList.add("edit");
       }
     });
+  }
+
+  /* ✅ 手机版长按红叉（只加不改） */
+  if(isPhone){
+    var touchTimer = null;
+
+    grid.addEventListener("touchstart", function(ev){
+      var appEl = ev.target.closest && ev.target.closest(".app:not(.add-app)");
+      if(!appEl || document.body.classList.contains("edit")) return;
+      touchTimer = setTimeout(function(){
+        document.body.classList.add("edit");
+        navigator.vibrate && navigator.vibrate(10);
+      }, 550);
+    }, {passive:true});
+
+    grid.addEventListener("touchend", function(){ clearTimeout(touchTimer); });
+    grid.addEventListener("touchmove", function(){ clearTimeout(touchTimer); });
+    grid.addEventListener("touchcancel", function(){ clearTimeout(touchTimer); });
   }
 
   /* ===== 搜索 ===== */
