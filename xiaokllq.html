@@ -173,7 +173,8 @@
                 document.getElementById("kw").focus();
                 return false;
             }
-            window.open("https://www.baidu.com/s?wd=" + encodeURIComponent(keyword), "_blank");
+            // 改这里：window.open 换成 window.location.href
+            window.location.href = "https://www.baidu.com/s?wd=" + encodeURIComponent(keyword);
             return false;
         }
     </script>
