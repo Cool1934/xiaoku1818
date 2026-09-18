@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>豌拜集团 · 科技驱动未来</title>
+<style>
+  /* ===== Reset & Base ===== */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --blue-900:#0a1628;
+    --blue-800:#0f2347;
+    --blue-600:#1a56db;
+    --blue-500:#3b82f6;
+    --blue-400:#60a5fa;
+    --blue-100:#dbeafe;
+    --cyan:#06b6d4;
+    --gray-300:#d1d5db;
+    --gray-400:#9ca3af;
+    --gray-500:#6b7280;
+    --gray-800:#1f2937;
+    --white:#fff;
+    --max-w:1200px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",system-ui,-apple-system,sans-serif;
+    color:var(--gray-800); line-height:1.7; overflow-x:hidden;
+  }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  .container{ max-width:var(--max-w); margin:0 auto; padding:0 24px; }
+
+  /* ===== Navbar ===== */
+  .navbar{
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    background:rgba(10,22,40,.85); backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    transition:all .3s;
+  }
+  .navbar .container{ display:flex; align-items:center; justify-content:space-between; height:70px; }
+  .logo{ display:flex; align-items:center; gap:10px; font-size:22px; font-weight:800; color:var(--white); letter-spacing:1px; }
+  .logo-mark{
+    width:38px; height:38px; border-radius:10px;
+    background:linear-gradient(135deg,var(--blue-500),var(--cyan));
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; box-shadow:0 4px 16px rgba(59,130,246,.4);
+  }
+  .nav-links{ display:flex; gap:36px; }
+  .nav-links a{
+    color:rgba(255,255,255,.75); font-size:15px; font-weight:500;
+    transition:color .25s; position:relative; padding:4px 0;
+  }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px;
+    background:linear-gradient(90deg,var(--blue-500),var(--cyan));
+    transition:width .3s; border-radius:2px;
+  }
+  .nav-links a:hover{ color:var(--white); }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-cta{
+    padding:9px 26px; border-radius:30px; font-size:14px; font-weight:600;
+    background:linear-gradient(135deg,var(--blue-500),var(--cyan));
+    color:var(--white); transition:transform .25s,box-shadow .25s;
+    box-shadow:0 4px 16px rgba(59,130,246,.35);
+  }
+  .nav-cta:hover{ transform:translateY(-2px); box-shadow:0 8px 24px rgba(59,130,246,.5); }
+  .menu-toggle{ display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+  .menu-toggle span{ width:24px; height:2px; background:var(--white); border-radius:2px; transition:.3s; }
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative; min-height:100vh; display:flex; align-items:center;
+    background:
+      radial-gradient(1200px 600px at 80% 20%, rgba(6,182,212,.18), transparent 60%),
+      radial-gradient(800px 500px at 10% 80%, rgba(59,130,246,.15), transparent 55%),
+      linear-gradient(160deg,var(--blue-900) 0%,var(--blue-800) 100%);
+    overflow:hidden; padding-top:70px;
+  }
+  .hero-grid{
+    position:absolute; inset:0;
+    background-image:linear-gradient(rgba(59,130,246,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.05) 1px,transparent 1px);
+    background-size:64px 64px; mask-image:radial-gradient(ellipse at center,black 40%,transparent 75%);
+  }
+  .hero .container{ position:relative; z-index:2; }
+  .hero-badge{
+    display:inline-flex; align-items:center; gap:8px; padding:7px 18px 7px 14px;
+    border-radius:30px; font-size:13px; font-weight:600; color:var(--blue-100);
+    background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.25);
+    margin-bottom:28px;
+  }
+  .hero-badge .dot{ width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan); }
+  .hero h1{
+    font-size:60px; font-weight:850; line-height:1.15; color:var(--white);
+    letter-spacing:-1px; margin-bottom:20px;
+  }
+  .hero h1 .gradient{
+    background:linear-gradient(90deg,var(--blue-400),var(--cyan));
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .hero-sub{ font-size:19px; color:rgba(255,255,255,.7); max-width:620px; margin-bottom:36px; line-height:1.8; }
+  .hero-actions{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn-primary{
+    padding:15px 38px; border-radius:30px; font-size:16px; font-weight:600; color:var(--white);
+    background:linear-gradient(135deg,var(--blue-500),var(--cyan));
+    box-shadow:0 8px 28px rgba(59,130,246,.4); transition:all .3s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary:hover{ transform:translateY(-3px); box-shadow:0 12px 36px rgba(59,130,246,.55); }
+  .btn-ghost{
+    padding:15px 38px; border-radius:30px; font-size:16px; font-weight:600;
+    color:var(--white); border:1.5px solid rgba(255,255,255,.25); transition:all .3s;
+  }
+  .btn-ghost:hover{ border-color:var(--blue-400); background:rgba(59,130,246,.1); transform:translateY(-3px); }
+  .hero-stats{
+    display:flex; gap:56px; margin-top:72px; flex-wrap:wrap;
+  }
+  .stat-item .num{ font-size:38px; font-weight:800; color:var(--white); line-height:1; }
+  .stat-item .num .unit{ font-size:20px; color:var(--blue-400); }
+  .stat-item .label{ font-size:14px; color:rgba(255,255,255,.55); margin-top:6px; }
+
+  /* ===== Section Common ===== */
+  section{ padding:110px 0; }
+  .sec-head{ text-align:center; margin-bottom:64px; }
+  .sec-tag{
+    display:inline-block; padding:5px 16px; border-radius:20px; font-size:13px; font-weight:700;
+    color:var(--blue-600); background:var(--blue-100); letter-spacing:1px; margin-bottom:16px;
+  }
+  .sec-title{ font-size:38px; font-weight:800; color:var(--blue-900); letter-spacing:-.5px; }
+  .sec-desc{ font-size:16px; color:var(--gray-500); max-width:620px; margin:14px auto 0; }
+
+  /* ===== About ===== */
+  .about{ background:#f8fafc; }
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+  .about-visual{
+    position:relative; border-radius:24px; overflow:hidden;
+    background:linear-gradient(135deg,var(--blue-600),var(--cyan));
+    height:420px; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 24px 60px rgba(26,86,219,.25);
+  }
+  .about-visual::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,.15) 0,transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(255,255,255,.1) 0,transparent 40%);
+  }
+  .visual-orb{
+    width:180px; height:180px; border-radius:50%;
+    background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.25);
+    display:flex; align-items:center; justify-content:center;
+    font-size:56px; position:relative; z-index:2;
+    animation:float 6s ease-in-out infinite;
+  }
+  @keyframes float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-18px); } }
+  .about-text h3{ font-size:28px; font-weight:800; color:var(--blue-900); margin-bottom:18px; line-height:1.4; }
+  .about-text p{ font-size:16px; color:var(--gray-500); margin-bottom:16px; }
+  .about-list{ margin-top:24px; }
+  .about-list li{
+    display:flex; align-items:flex-start; gap:12px; padding:10px 0;
+    font-size:15px; color:var(--gray-800); font-weight:500;
+  }
+  .about-list li .ic{
+    flex-shrink:0; width:22px; height:22px; border-radius:6px;
+    background:var(--blue-100); color:var(--blue-600);
+    display:flex; align-items:center; justify-content:center; font-size:13px; margin-top:2px;
+  }
+
+  /* ===== Business ===== */
+  .biz-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .biz-card{
+    position:relative; padding:36px 30px; border-radius:20px;
+    background:var(--white); border:1px solid #eef2f7;
+    transition:all .35s; overflow:hidden;
+  }
+  .biz-card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:4px;
+    background:linear-gradient(90deg,var(--blue-500),var(--cyan));
+    transform:scaleX(0); transform-origin:left; transition:transform .4s;
+  }
+  .biz-card:hover{ transform:translateY(-8px); box-shadow:0 20px 48px rgba(26,86,219,.12); border-color:transparent; }
+  .biz-card:hover::before{ transform:scaleX(1); }
+  .biz-ic{
+    width:60px; height:60px; border-radius:16px; margin-bottom:22px;
+    background:linear-gradient(135deg,var(--blue-500),var(--cyan));
+    display:flex; align-items:center; justify-content:center; font-size:28px;
+    box-shadow:0 8px 20px rgba(59,130,246,.3);
+  }
+  .biz-card h4{ font-size:20px; font-weight:700; color:var(--blue-900); margin-bottom:10px; }
+  .biz-card p{ font-size:14.5px; color:var(--gray-500); line-height:1.75; }
+
+  /* ===== Data / Milestones ===== */
+  .data{ background:linear-gradient(160deg,var(--blue-900),var(--blue-800)); position:relative; overflow:hidden; }
+  .data .sec-tag{ background:rgba(59,130,246,.15); color:var(--blue-100); }
+  .data .sec-title{ color:var(--white); }
+  .data .sec-desc{ color:rgba(255,255,255,.6); }
+  .data-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+  .data-item{
+    text-align:center; padding:36px 20px; border-radius:20px;
+    background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+    transition:all .35s;
+  }
+  .data-item:hover{ background:rgba(255,255,255,.08); transform:translateY(-5px); }
+  .data-num{ font-size:46px; font-weight:850; background:linear-gradient(90deg,var(--blue-400),var(--cyan)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; line-height:1; }
+  .data-label{ font-size:15px; color:rgba(255,255,255,.65); margin-top:10px; }
+
+  /* ===== News ===== */
+  .news{ background:#f8fafc; }
+  .news-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .news-card{
+    border-radius:20px; overflow:hidden; background:var(--white);
+    border:1px solid #eef2f7; transition:all .35s;
+  }
+  .news-card:hover{ transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,.08); }
+  .news-cover{
+    height:170px; display:flex; align-items:center; justify-content:center; font-size:40px;
+    background:linear-gradient(135deg,var(--blue-500),var(--cyan));
+  }
+  .news-cover.c2{ background:linear-gradient(135deg,#1a56db,#7c3aed); }
+  .news-cover.c3{ background:linear-gradient(135deg,#06b6d4,#10b981); }
+  .news-body{ padding:24px; }
+  .news-meta{ font-size:13px; color:var(--blue-600); font-weight:600; margin-bottom:8px; }
+  .news-body h4{ font-size:18px; font-weight:700; color:var(--blue-900); margin-bottom:10px; line-height:1.5; }
+  .news-body p{ font-size:14px; color:var(--gray-500); line-height:1.7; }
+
+  /* ===== Contact ===== */
+  .contact-inner{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px;
+    background:var(--white); border-radius:28px; padding:56px;
+    box-shadow:0 20px 60px rgba(0,0,0,.06); border:1px solid #eef2f7;
+  }
+  .ci-item{ display:flex; gap:16px; padding:20px 0; border-bottom:1px solid #f1f5f9; }
+  .ci-item:last-child{ border-bottom:none; }
+  .ci-ic{
+    width:48px; height:48px; border-radius:14px; flex-shrink:0;
+    background:var(--blue-100); color:var(--blue-600);
+    display:flex; align-items:center; justify-content:center; font-size:22px;
+  }
+  .ci-item h5{ font-size:16px; font-weight:700; color:var(--blue-900); margin-bottom:4px; }
+  .ci-item p{ font-size:14px; color:var(--gray-500); }
+  .contact-form{ display:flex; flex-direction:column; gap:16px; }
+  .contact-form input,.contact-form textarea{
+    width:100%; padding:14px 18px; border-radius:12px; border:1.5px solid #e2e8f0;
+    font-size:15px; font-family:inherit; color:var(--gray-800); transition:border-color .25s;
+    background:#f8fafc; outline:none;
+  }
+  .contact-form input:focus,.contact-form textarea:focus{ border-color:var(--blue-500); background:var(--white); }
+  .contact-form textarea{ resize:vertical; min-height:120px; }
+  .contact-form button{
+    padding:15px; border:none; border-radius:12px; font-size:16px; font-weight:600;
+    color:var(--white); cursor:pointer;
+    background:linear-gradient(135deg,var(--blue-500),var(--cyan));
+    box-shadow:0 8px 24px rgba(59,130,246,.35); transition:all .3s;
+  }
+  .contact-form button:hover{ transform:translateY(-2px); box-shadow:0 12px 32px rgba(59,130,246,.5); }
+
+  /* ===== Footer ===== */
+  footer{ background:var(--blue-900); padding:64px 0 32px; }
+  .foot-grid{ display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:48px; }
+  .foot-brand .logo{ margin-bottom:16px; }
+  .foot-brand p{ font-size:14px; color:rgba(255,255,255,.5); max-width:280px; line-height:1.8; }
+  .foot-col h6{ font-size:16px; font-weight:700; color:var(--white); margin-bottom:18px; }
+  .foot-col a{ display:block; font-size:14px; color:rgba(255,255,255,.55); padding:6px 0; transition:color .25s; }
+  .foot-col a:hover{ color:var(--blue-400); }
+  .foot-bottom{
+    border-top:1px solid rgba(255,255,255,.08); padding-top:28px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+  }
+  .foot-bottom p{ font-size:13px; color:rgba(255,255,255,.35); }
+  .foot-social{ display:flex; gap:12px; }
+  .foot-social a{
+    width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,.06); color:rgba(255,255,255,.6); font-size:16px; transition:all .25s;
+  }
+  .foot-social a:hover{ background:var(--blue-500); color:var(--white); transform:translateY(-2px); }
+
+  /* ===== Brand Mark (书法字标) ===== */
+  .wbrand{ display:block; margin:0 auto; max-width:100%; height:auto; }
+  .wbrand-sm{ max-height:34px; }
+  .wbrand-md{ max-height:64px; }
+  .wbrand-lg{ max-height:140px; }
+  .wbrand-xl{ max-height:200px; }
+
+  /* 各区块字标容器 */
+  .brand-hero{ text-align:center; margin-bottom:8px; }
+  
+  .brand-sec{ text-align:center; margin-bottom:22px; }
+  
+  .brand-data{ text-align:center; margin-bottom:20px; }
+  .brand-foot{ margin:0 auto 18px; text-align:center; }
+  
+  .brand-card{ text-align:center; margin:0 auto 14px; }
+  .brand-card img{ max-height:48px; }
+  .brand-ci{ flex-shrink:0; }
+  .brand-ci img{ max-height:44px; border-radius:10px; }
+
+  /* ===== Animations on scroll ===== */
+  .reveal{ opacity:0; transform:translateY(30px); transition:all .7s cubic-bezier(.22,1,.36,1); }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* ===== Responsive ===== */
+  @media(max-width:960px){
+    .nav-links{ display:none; position:absolute; top:70px; left:0; right:0; flex-direction:column; gap:0; background:rgba(10,22,40,.97); padding:20px 0; border-bottom:1px solid rgba(255,255,255,.08); }
+    .nav-links.active{ display:flex; }
+    .nav-links a{ padding:14px 24px; font-size:16px; }
+    .nav-cta{ display:none; }
+    .menu-toggle{ display:flex; }
+    .hero h1{ font-size:40px; }
+    .hero-sub{ font-size:16px; }
+    .hero-stats{ gap:32px; margin-top:48px; }
+    .stat-item .num{ font-size:30px; }
+    .about-grid{ grid-template-columns:1fr; gap:40px; }
+    .about-visual{ height:300px; }
+    .biz-grid,.news-grid{ grid-template-columns:1fr; }
+    .data-grid{ grid-template-columns:repeat(2,1fr); }
+    .contact-inner{ grid-template-columns:1fr; padding:32px 24px; gap:32px; }
+    .foot-grid{ grid-template-columns:1fr 1fr; }
+    section{ padding:80px 0; }
+    .sec-title{ font-size:30px; }
+  }
+  @media(max-width:560px){
+    .hero h1{ font-size:32px; }
+    .hero-actions{ flex-direction:column; width:100%; }
+    .hero-actions a{ text-align:center; justify-content:center; }
+    .data-grid{ grid-template-columns:1fr 1fr; gap:16px; }
+    .data-num{ font-size:34px; }
+    .foot-grid{ grid-template-columns:1fr; }
+    .foot-bottom{ flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Navbar ===== -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="#top" class="logo">
+      <img src="logo_wanbai_white.png" alt="豌拜" class="wbrand wbrand-sm">
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">关于我们</a>
+      <a href="#business">核心业务</a>
+      <a href="#data">集团实力</a>
+      <a href="#news">新闻动态</a>
+      <a href="#contact">联系我们</a>
+    </div>
+    <a href="#contact" class="nav-cta">合作咨询</a>
+    <div class="menu-toggle" id="menuToggle">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<header class="hero" id="top">
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="brand-hero"><img src="logo_wanbai_white.png" alt="豌拜" class="wbrand wbrand-xl"></div>
+    <div class="hero-badge"><span class="dot"></span> 以科技为引擎，驱动产业未来</div>
+    <h1>科技赋能产业<br><span class="gradient">连接无限可能</span></h1>
+    <p class="hero-sub">豌拜集团深耕智能科技与产业数字化领域，以技术创新为核心，为全球客户提供端到端的数字化解决方案，助力企业迈向智能化未来。</p>
+    <div class="hero-actions">
+      <a href="#business" class="btn-primary">探索业务 →</a>
+      <a href="#about" class="btn-ghost">了解更多</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="num">15<span class="unit">+</span></div><div class="label">深耕行业年限</div></div>
+      <div class="stat-item"><div class="num">300<span class="unit">+</span></div><div class="label">全球合作伙伴</div></div>
+      <div class="stat-item"><div class="num">50<span class="unit">+</span></div><div class="label">国家与地区覆盖</div></div>
+      <div class="stat-item"><div class="num">1200<span class="unit">+</span></div><div class="label">专业团队成员</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== About ===== -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="visual-orb">
+          <img src="logo_wanbai_white.png" alt="豌拜" class="wbrand wbrand-md">
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <div class="sec-tag">ABOUT US</div>
+        <h3>以技术创新重塑产业格局，<br>做数字化转型的坚定推动者</h3>
+        <p>豌拜集团成立于 2010 年，是一家以人工智能、云计算、物联网为核心的科技产业集团。我们致力于将前沿技术转化为可落地的行业解决方案，帮助企业在数字化浪潮中抢占先机。</p>
+        <p>集团业务遍及全球 50 多个国家和地区，服务客户涵盖智能制造、金融科技、智慧城市、医疗健康等多个领域。</p>
+        <ul class="about-list">
+          <li><span class="ic">✓</span> 国家级高新技术企业，拥有 200+ 核心专利</li>
+          <li><span class="ic">✓</span> 通过 ISO 9001 / ISO 27001 国际体系认证</li>
+          <li><span class="ic">✓</span> 与全球顶尖高校及科研机构建立联合实验室</li>
+          <li><span class="ic">✓</span> 连续三年入选 "中国科技创新企业 100 强"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Business ===== -->
+<section class="business" id="business">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="brand-sec"><img src="logo_wanbai_dark.png" alt="豌拜" class="wbrand wbrand-md"></div>
+      <div class="sec-tag">CORE BUSINESS</div>
+      <h2 class="sec-title">四大核心业务板块</h2>
+      <p class="sec-desc">覆盖从底层技术到行业应用的全链路能力，为客户提供一站式数字化升级服务</p>
+    </div>
+    <div class="biz-grid">
+      <div class="biz-card reveal">
+        <div class="brand-card"><img src="logo_wanbai_dark.png" alt="豌拜" class="wbrand"></div>
+        <div class="biz-ic">🤖</div>
+        <h4>人工智能</h4>
+        <p>提供计算机视觉、自然语言处理、智能决策等 AI 能力平台，赋能千行百业的智能化升级与场景落地。</p>
+      </div>
+      <div class="biz-card reveal">
+        <div class="brand-card"><img src="logo_wanbai_dark.png" alt="豌拜" class="wbrand"></div>
+        <div class="biz-ic">☁️</div>
+        <h4>云计算与数据</h4>
+        <p>构建安全可靠的云基础设施与数据中台，助力企业实现数据资产化、业务敏捷化与运维智能化。</p>
+      </div>
+      <div class="biz-card reveal">
+        <div class="brand-card"><img src="logo_wanbai_dark.png" alt="豌拜" class="wbrand"></div>
+        <div class="biz-ic">🔗</div>
+        <h4>物联网与边缘计算</h4>
+        <p>端-边-云协同的物联网平台，连接物理世界与数字世界，为智慧城市与工业互联网提供坚实底座。</p>
+      </div>
+      <div class="biz-card reveal">
+        <div class="brand-card"><img src="logo_wanbai_dark.png" alt="豌拜" class="wbrand"></div>
+        <div class="biz-ic">🏭</div>
+        <h4>智能制造</h4>
+        <p>面向工业 4.0 的数字工厂解决方案，涵盖智能产线、工业软件与数字孪生，全面提升生产效率。</p>
+      </div>
+      <div class="biz-card reveal">
+        <div class="brand-card"><img src="logo_wanbai_dark.png" alt="豌拜" class="wbrand"></div>
+        <div class="biz-ic">🏙️</div>
+        <h4>智慧城市</h4>
+        <p>城市级数字化运营平台，整合交通、安防、环保、政务等多场景，让城市更智慧、生活更美好。</p>
+      </div>
+      <div class="biz-card reveal">
+        <div class="brand-card"><img src="logo_wanbai_dark.png" alt="豌拜" class="wbrand"></div>
+        <div class="biz-ic">💡</div>
+        <h4>创新孵化</h4>
+        <p>设立产业投资基金与创新孵化器，扶持早期科技创业团队，构建开放共赢的创新生态体系。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Data ===== -->
+<section class="data" id="data">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="brand-data"><img src="logo_wanbai_white.png" alt="豌拜" class="wbrand wbrand-md"></div>
+      <div class="sec-tag">OUR STRENGTH</div>
+      <h2 class="sec-title">数字见证实力</h2>
+      <p class="sec-desc">十余年技术沉淀，用数据诠释我们的专业与承诺</p>
+    </div>
+    <div class="data-grid">
+      <div class="data-item reveal"><div class="data-num">200+</div><div class="data-label">核心专利技术</div></div>
+      <div class="data-item reveal"><div class="data-num">86%</div><div class="data-label">研发投入占比</div></div>
+      <div class="data-item reveal"><div class="data-num">99.9%</div><div class="data-label">系统可用性 SLA</div></div>
+      <div class="data-item reveal"><div class="data-num">4.8</div><div class="data-label">客户满意度（满分 5）</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== News ===== -->
+<section class="news" id="news">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="brand-sec"><img src="logo_wanbai_dark.png" alt="豌拜" class="wbrand wbrand-md"></div>
+      <div class="sec-tag">NEWS & EVENTS</div>
+      <h2 class="sec-title">新闻与动态</h2>
+      <p class="sec-desc">关注豌拜集团最新动态，了解行业前沿趋势</p>
+    </div>
+    <div class="news-grid">
+      <div class="news-card reveal">
+        <div class="news-cover">🏆</div>
+        <div class="news-body">
+          <div class="news-meta">2026 · 08 · 28</div>
+          <h4>豌拜集团荣获 "年度最佳数字化转型服务商" 大奖</h4>
+          <p>在 2026 全球数字经济峰会上，豌拜集团凭借在智能制造领域的突出表现获此殊荣。</p>
+        </div>
+      </div>
+      <div class="news-card reveal">
+        <div class="news-cover c2">🤝</div>
+        <div class="news-body">
+          <div class="news-meta">2026 · 07 · 15</div>
+          <h4>与全球顶尖高校共建 AI 联合创新实验室</h4>
+          <p>集团宣布与多所国内外知名高校达成战略合作，聚焦大模型与具身智能前沿研究。</p>
+        </div>
+      </div>
+      <div class="news-card reveal">
+        <div class="news-cover c3">🚀</div>
+        <div class="news-body">
+          <div class="news-meta">2026 · 06 · 03</div>
+          <h4>新一代工业互联网平台正式发布</h4>
+          <p>全自研的端-边-云协同平台重磅上线，已成功落地 50+ 标杆工厂，降本增效显著。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact ===== -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="brand-sec"><img src="logo_wanbai_dark.png" alt="豌拜" class="wbrand wbrand-md"></div>
+      <div class="sec-tag">CONTACT US</div>
+      <h2 class="sec-title">与我们取得联系</h2>
+      <p class="sec-desc">无论您有任何合作意向或疑问，我们都将竭诚为您服务</p>
+    </div>
+    <div class="contact-inner reveal">
+      <div>
+        <div class="ci-item">
+          <div class="brand-ci"><img src="logo_wanbai_dark.png" alt="豌拜" class="wbrand"></div>
+          <div><h5>总部地址</h5><p>北京市海淀区中关村科技园区豌拜大厦 18 层</p></div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-ic">📞</div>
+          <div><h5>联系电话</h5><p>+86 010-8888-6666</p></div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-ic">✉️</div>
+          <div><h5>电子邮箱</h5><p>contact@wanbai-group.com</p></div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-ic">🌐</div>
+          <div><h5>分支机构</h5><p>上海 · 深圳 · 杭州 · 成都 · 新加坡 · 硅谷</p></div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="return handleSubmit(event)">
+        <input type="text" placeholder="您的姓名" required>
+        <input type="email" placeholder="电子邮箱" required>
+        <input type="text" placeholder="联系电话">
+        <textarea placeholder="请简要描述您的需求或合作意向" required></textarea>
+        <button type="submit">提交咨询 →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand-foot"><img src="logo_wanbai_white.png" alt="豌拜" class="wbrand wbrand-md"></div>
+        <p>以科技为引擎，驱动产业未来。豌拜集团致力于成为全球领先的数字化解决方案提供商。</p>
+      </div>
+      <div class="foot-col">
+        <h6>快速导航</h6>
+        <a href="#about">关于我们</a>
+        <a href="#business">核心业务</a>
+        <a href="#data">集团实力</a>
+        <a href="#news">新闻动态</a>
+      </div>
+      <div class="foot-col">
+        <h6>业务板块</h6>
+        <a href="#">人工智能</a>
+        <a href="#">云计算与数据</a>
+        <a href="#">物联网</a>
+        <a href="#">智能制造</a>
+      </div>
+      <div class="foot-col">
+        <h6>关注我们</h6>
+        <a href="#">微信公众号</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">新浪微博</a>
+        <a href="#">Bilibili</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 豌拜集团 WanBai Group. All rights reserved. 京ICP备XXXXXXXX号</p>
+      <div class="foot-social">
+        <a href="#" title="微信">💬</a>
+        <a href="#" title="微博">📱</a>
+        <a href="#" title="LinkedIn">💼</a>
+        <a href="#" title="邮箱">✉️</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('active')));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const old = btn.textContent;
+    btn.textContent = '✓ 提交成功，我们将尽快与您联系';
+    btn.style.background = 'linear-gradient(135deg,#10b981,#059669)';
+    setTimeout(() => { e.target.reset(); btn.textContent = old; btn.style.background = ''; }, 3000);
+    return false;
+  }
+</script>
+</body>
+</html>
