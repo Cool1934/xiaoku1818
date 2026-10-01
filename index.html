@@ -1,92 +1,75 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" type="image/x-icon" href="0c3d410f3f40eeced3e3eca7af7d8df6.ico">
 <title>小酷网络科技有限公司</title>
 <style type="text/css">
+.topimg{width:100%;max-width:1000px;margin:0 auto 20px;padding:0 16px;box-sizing:border-box;}
+.topimg img{width:100%;height:auto;display:block;border-radius:14px;object-fit:cover;}
 .btn {
-  display: inline-block;
-  padding: 14px 32px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  border-radius: 50px;
-  text-decoration: none;
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.35);
-  transition: all 0.3s ease;
-  margin: 6px 8px;
+display: inline-block;
+padding: 14px 32px;
+font-size: 16px;
+font-weight: 600;
+color: #fff;
+background: linear-gradient(135deg, #667eea, #764ba2);
+border-radius: 50px;
+text-decoration: none;
+box-shadow: 0 8px 24px rgba(102, 126, 234, 0.35);
+transition: all 0.3s ease;
+margin: 6px 8px;
 }
 .btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(102, 126, 234, 0.5);
+transform: translateY(-4px);
+box-shadow: 0 14px 30px rgba(102, 126, 234, 0.5);
 }
 .btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 6px 14px rgba(102, 126, 234, 0.4);
+transform: translateY(2px);
+box-shadow: 0 6px 14px rgba(102, 126, 234, 0.4);
 }
 body{
-  background-image: url('QQ20260828-214518.png');
-  background-color: rgb(253, 253, 253);
-  color: rgb(255, 255, 255);
-  text-align: center;
-  padding-top: 20px;
-  margin: 0;
-  position: relative;
-  z-index: 0;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  min-height: 100vh;
+background-image: url('QQ20260828-214518.png');
+background-color: rgb(253, 253, 253);
+color: rgb(255, 255, 255);
+text-align: center;
+padding-top:100px;
+position: relative;
+z-index: 0;
+background-size: cover;
+background-position: center;
+background-attachment: fixed;
+min-height: 100vh;
 }
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(circle at 20% 20%, rgba(102,126,234,.55), transparent 45%),
-  radial-gradient(circle at 85% 80%, rgba(255,90,150,.35), transparent 50%),
-  linear-gradient(160deg, #1b1140 0%, #2b1657 45%, #0f0826 100%);
-  backdrop-filter: blur(0px);
+content: "";
+position: fixed;
+inset: 0;
+z-index: -1;
+background: radial-gradient(circle at 20% 20%, rgba(102,126,234,.55), transparent 45%),
+radial-gradient(circle at 85% 80%, rgba(255,90,150,.35), transparent 50%),
+linear-gradient(160deg, #1b1140 0%, #2b1657 45%, #0f0826 100%);
+backdrop-filter: blur(0px);
 }
 .box{
-  width: 300px;
-  background-color: rgb(83, 64, 64);
-  margin: 10px auto;
-  border-radius: 20px;
-  padding: 10px 0;
+width: 300px;
+background-color: rgb(83, 64, 64);
+margin: 10px auto;
+border-radius: 20px;
+padding: 10px 0;
 }
-/* 顶部自适应图片 */
-.top-banner {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto 24px;
-  padding: 0 16px;
-  box-sizing: border-box;
-}
-.top-banner img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-}
-@media (max-width: 600px) {
-  .top-banner { padding: 0 10px; margin-bottom: 16px; }
-  .top-banner img { border-radius: 12px; }
-  h1 { font-size: 22px; }
+@media(max-width:600px){
+.topimg{padding:0 10px;}
+.topimg img{border-radius:10px;}
+h1{font-size:22px;}
 }
 </style>
+<meta name="sogou_site_verification" content="GKJr7kcb0W" />
 </head>
 <body>
-
-<!-- 顶部图片（Base64 内嵌，单文件无依赖） -->
-<div class="top-banner">
-  <img src="942a90549801d87fe9065f732236f4da.jpg">
+<div class="942a90549801d87fe9065f732236f4da.jpg">
+<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDQwMCI+PHN0eWxlPmJvZHl7Zm9udC1mYW1pbHk6InNhbnMtc2VyaWYiO308L3N0eWxlPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NjdlZWE7c3RvcC1vcGFjaXR5OjEiIC8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzY0YmEyO3N0b3Atb3BhY2l0eToxIiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0idXJsKCNncmFkaWVudCkiLz48dGV4dCB4PSI2MDAiIHk9IjIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iNDgiIGZvbnQtd2VpZ2h0PSJib2xkIj7lsI_lrabnlKjmiLfkuqfliqjlm6LpgqPkvbPpgZPnqIvlubM8L3RleHQ+PC9zdmc+">
 </div>
-
 <h1>小酷网络科技有限公司</h1>
 <marquee>夜魔文化x小酷网络 酷狗音乐 网易云音乐 QQ音乐 酷我音乐 汽水音乐 搜：ku小酷</marquee>
 <P></P>
