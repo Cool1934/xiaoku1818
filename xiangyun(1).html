@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>香韵文化 · 旗下厂牌</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>音</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+  :root {
+    --bg-deep: #0A0A14;
+    --bg-card: #141422;
+    --bg-card-hover: #1C1C30;
+    --gold: #D4A853;
+    --gold-light: #E8C98A;
+    --text-primary: #F0EDE6;
+    --text-secondary: #A0A0B8;
+    --text-muted: #6B6B85;
+    --border: #2A2A40;
+
+    --c-xiaonan: #FF6B9D;
+    --c-jinlin: #6BCB77;
+    --c-yemo: #6B8CFF;
+    --c-baicheng: #C084FC;
+    --c-lingchuang: #FFB347;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===== 背景装饰 ===== */
+  .bg-glow {
+    position: fixed;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(212, 168, 83, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-glow-2 {
+    position: fixed;
+    bottom: -30%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(192, 132, 252, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== Hero 区 ===== */
+  .hero {
+    padding: 100px 0 80px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 1px solid var(--gold);
+    border-radius: 100px;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(42px, 8vw, 72px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #F0EDE6 0%, var(--gold-light) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto 48px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* ===== 分隔线 ===== */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 60px 0;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  .divider-text {
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 4px;
+    font-weight: 400;
+  }
+
+  /* ===== 厂牌概览标签 ===== */
+  .labels-overview {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 60px;
+  }
+
+  .label-chip {
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .label-chip:hover {
+    transform: translateY(-2px);
+  }
+
+  .label-chip[data-color="pink"]:hover { border-color: var(--c-xiaonan); color: var(--c-xiaonan); }
+  .label-chip[data-color="green"]:hover { border-color: var(--c-jinlin); color: var(--c-jinlin); }
+  .label-chip[data-color="blue"]:hover { border-color: var(--c-yemo); color: var(--c-yemo); }
+  .label-chip[data-color="purple"]:hover { border-color: var(--c-baicheng); color: var(--c-baicheng); }
+  .label-chip[data-color="orange"]:hover { border-color: var(--c-lingchuang); color: var(--c-lingchuang); }
+
+  /* ===== 厂牌卡片 ===== */
+  .labels-section {
+    padding: 40px 0 80px;
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .section-title h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .section-title p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cards-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .label-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .label-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--card-color, var(--gold));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .label-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--card-color, var(--gold));
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .label-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .card-number {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    background: color-mix(in srgb, var(--card-color) 15%, transparent);
+  }
+
+  .card-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--card-color);
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .card-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    background: color-mix(in srgb, var(--card-color) 12%, transparent);
+    color: var(--card-color);
+    margin-bottom: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .card-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .service-tag {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  /* 各厂牌专属色 */
+  .card-xiaonan { --card-color: var(--c-xiaonan); }
+  .card-jinlin { --card-color: var(--c-jinlin); }
+  .card-yemo { --card-color: var(--c-yemo); }
+  .card-baicheng { --card-color: var(--c-baicheng); }
+  .card-lingchuang { --card-color: var(--c-lingchuang); }
+
+  /* 最后一张卡片跨列居中 */
+  @media (min-width: 1024px) {
+    .card-lingchuang {
+      grid-column: span 3;
+      max-width: 400px;
+      justify-self: center;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .card-lingchuang {
+      grid-column: span 2;
+      max-width: 400px;
+      justify-self: center;
+    }
+  }
+
+  /* ===== 产业链全景 ===== */
+  .chain-section {
+    padding: 60px 0;
+    background: linear-gradient(180deg, transparent, rgba(212, 168, 83, 0.03), transparent);
+  }
+
+  .chain-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .chain-flow {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .chain-step {
+    flex: 1;
+    text-align: center;
+    padding: 20px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .chain-step-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: var(--gold);
+  }
+
+  .chain-step-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .chain-step-label {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .chain-arrow {
+    color: var(--gold);
+    font-size: 20px;
+    text-align: center;
+    opacity: 0.5;
+  }
+
+  @media (min-width: 768px) {
+    .chain-arrow {
+      transform: rotate(0deg);
+    }
+  }
+
+  /* ===== 底部 CTA ===== */
+  .cta-section {
+    padding: 80px 0 100px;
+    text-align: center;
+  }
+
+  .cta-box {
+    background: linear-gradient(135deg, rgba(212, 168, 83, 0.1) 0%, rgba(192, 132, 252, 0.05) 100%);
+    border: 1px solid rgba(212, 168, 83, 0.2);
+    border-radius: 24px;
+    padding: 60px 40px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-box h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .cta-box p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    margin-bottom: 32px;
+    line-height: 1.8;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    background: linear-gradient(135deg, var(--gold) 0%, #B8923F 100%);
+    color: #1A1005;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(212, 168, 83, 0.3);
+  }
+
+  /* ===== 页脚 ===== */
+  footer {
+    padding: 32px 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  footer p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ===== 动画 ===== */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ===== 模态弹窗 ===== */
+  .modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .modal-mask.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 32px 28px;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    position: relative;
+  }
+
+  .modal-mask.active .modal-box {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .modal-email {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--gold);
+    background: rgba(212, 168, 83, 0.08);
+    border: 1px solid rgba(212, 168, 83, 0.2);
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+    user-select: all;
+    cursor: pointer;
+    word-break: break-all;
+  }
+
+  .modal-email:hover {
+    border-color: rgba(212, 168, 83, 0.4);
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .modal-btn {
+    flex: 1;
+    max-width: 140px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .modal-btn-copy {
+    background: linear-gradient(135deg, var(--gold) 0%, #B8923F 100%);
+    color: #1A1005;
+  }
+
+  .modal-btn-copy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 168, 83, 0.35);
+  }
+
+  .modal-btn-cancel {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+
+  .modal-btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+  }
+
+  .modal-qr {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid rgba(212, 168, 83, 0.2);
+  }
+
+  .modal-qr img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .modal-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  .modal-close-x {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .modal-close-x:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<div class="container">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="hero-badge">综合音乐文化传媒</div>
+    <h1>香韵文化</h1>
+    <p class="hero-subtitle">
+      集音乐创作、音频制作、视觉设计、全平台发行、版权运营、艺人推广于一体，
+      旗下五大垂直厂牌，分工明确，覆盖完整音乐产业链。
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">5</div>
+        <div class="stat-label">垂直厂牌</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6+</div>
+        <div class="stat-label">产业链环节</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">全平台</div>
+        <div class="stat-label">发行覆盖</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 厂牌速览 ===== -->
+  <div class="divider">
+    <span class="divider-text">旗下厂牌</span>
+  </div>
+
+  <div class="labels-overview fade-up">
+    <span class="label-chip" data-color="pink">小楠音乐 · 翻唱发行</span>
+    <span class="label-chip" data-color="green">锦临音乐 · 原创创作</span>
+    <span class="label-chip" data-color="blue">夜魔文化 · 制作视觉</span>
+    <span class="label-chip" data-color="purple">百城文化 · AI 音乐</span>
+    <span class="label-chip" data-color="orange">领创互娱 · 运营推广</span>
+  </div>
+
+  <!-- ===== 厂牌详细卡片 ===== -->
+  <section class="labels-section">
+    <div class="section-title fade-up">
+      <h2>五大厂牌 · 各司其职</h2>
+      <p>从创作到制作，从发行到推广，每一个环节都有专业团队深耕。</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- 小楠音乐 -->
+      <div class="label-card card-xiaonan fade-up">
+        <div class="card-number">LABEL 01</div>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 18V5l12-2v13"/>
+            <circle cx="6" cy="18" r="3"/>
+            <circle cx="18" cy="16" r="3"/>
+          </svg>
+        </div>
+        <h3 class="card-title">小楠音乐</h3>
+        <span class="card-tag">翻唱作品发行</span>
+        <p class="card-desc">
+          挖掘优质翻唱歌手，深耕流行、喊麦、国风等风格，
+          负责翻唱歌曲录制、后期、TME 全平台发行与版权报备，打造爆款翻唱音频。
+        </p>
+        <div class="card-services">
+          <span class="service-tag">翻唱录制</span>
+          <span class="service-tag">后期制作</span>
+          <span class="service-tag">TME 发行</span>
+          <span class="service-tag">版权报备</span>
+        </div>
+      </div>
+
+      <!-- 锦临音乐 -->
+      <div class="label-card card-jinlin fade-up">
+        <div class="card-number">LABEL 02</div>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+            <path d="M2 2l7.586 7.586"/>
+            <circle cx="11" cy="11" r="2"/>
+          </svg>
+        </div>
+        <h3 class="card-title">锦临音乐</h3>
+        <span class="card-tag">自助原创创作</span>
+        <p class="card-desc">
+          独立音乐人自主运营厂牌。音乐人拥有高创作自由度，自主写词作曲，
+          厂牌提供发行渠道、版权申报、ISRC 申领服务，尊重原创表达，扶持独立唱作人。
+        </p>
+        <div class="card-services">
+          <span class="service-tag">原创扶持</span>
+          <span class="service-tag">发行渠道</span>
+          <span class="service-tag">版权申报</span>
+          <span class="service-tag">ISRC 申领</span>
+        </div>
+      </div>
+
+      <!-- 夜魔文化 -->
+      <div class="label-card card-yemo fade-up">
+        <div class="card-number">LABEL 03</div>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+        </div>
+        <h3 class="card-title">夜魔文化</h3>
+        <span class="card-tag">音乐制作 · 视觉设计</span>
+        <p class="card-desc">
+          专注音乐制作与视觉设计。承接编曲、混音、母带处理、专辑封面、MV 美术、海报设计，
+          为香韵体系内所有厂牌提供配套视觉与音频制作支撑。
+        </p>
+        <div class="card-services">
+          <span class="service-tag">编曲混音</span>
+          <span class="service-tag">母带处理</span>
+          <span class="service-tag">专辑封面</span>
+          <span class="service-tag">MV 美术</span>
+        </div>
+      </div>
+
+      <!-- 百城文化 -->
+      <div class="label-card card-baicheng fade-up">
+        <div class="card-number">LABEL 04</div>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="16" rx="2"/>
+            <rect x="9" y="9" width="6" height="6"/>
+            <path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/>
+          </svg>
+        </div>
+        <h3 class="card-title">百城文化</h3>
+        <span class="card-tag">新时代 AI 音乐</span>
+        <p class="card-desc">
+          聚焦 AI 辅助音乐创作，探索 AI 词曲、AI 人声，打造 AI 原创单曲，
+          拥抱数字音乐新赛道，量产 AI 音乐作品并完成合规发行。
+        </p>
+        <div class="card-services">
+          <span class="service-tag">AI 词曲</span>
+          <span class="service-tag">AI 人声</span>
+          <span class="service-tag">AI 单曲</span>
+          <span class="service-tag">合规发行</span>
+        </div>
+      </div>
+
+      <!-- 领创互娱 -->
+      <div class="label-card card-lingchuang fade-up">
+        <div class="card-number">LABEL 05</div>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 11l18-8-8 18-2-7-8-3z"/>
+          </svg>
+        </div>
+        <h3 class="card-title">领创互娱</h3>
+        <span class="card-tag">运营推广 · 流量运营</span>
+        <p class="card-desc">
+          负责艺人包装、作品宣发、短视频流量运营、账号矩阵维护，
+          为全部厂牌作品与艺人做流量曝光、全网推广。
+        </p>
+        <div class="card-services">
+          <span class="service-tag">艺人包装</span>
+          <span class="service-tag">作品宣发</span>
+          <span class="service-tag">短视频运营</span>
+          <span class="service-tag">账号矩阵</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 产业链全景 ===== -->
+  <section class="chain-section fade-up">
+    <div class="section-title">
+      <h2>全链路覆盖</h2>
+      <p>从一个旋律到一首爆款，完整闭环。</p>
+    </div>
+    <div class="chain-flow">
+      <div class="chain-step">
+        <div class="chain-step-icon">✦</div>
+        <div class="chain-step-name">创作</div>
+        <div class="chain-step-label">原创 / 翻唱 / AI</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-step">
+        <div class="chain-step-icon">✦</div>
+        <div class="chain-step-name">制作</div>
+        <div class="chain-step-label">编曲 / 混音 / 母带</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-step">
+        <div class="chain-step-icon">✦</div>
+        <div class="chain-step-name">视觉</div>
+        <div class="chain-step-label">封面 / MV / 海报</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-step">
+        <div class="chain-step-icon">✦</div>
+        <div class="chain-step-name">发行</div>
+        <div class="chain-step-label">全平台 / 版权</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-step">
+        <div class="chain-step-icon">✦</div>
+        <div class="chain-step-name">推广</div>
+        <div class="chain-step-label">流量 / 矩阵 / 宣发</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-section fade-up">
+    <div class="cta-box">
+      <h3>加入香韵，让音乐被听见</h3>
+      <p>
+        无论你是唱作人、翻唱歌手，还是音乐爱好者，<br>
+        香韵文化五大厂牌，总有一条适合你的路。
+      </p>
+      <button class="cta-btn" onclick="openModal()">
+        了解合作
+      </button>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <p>© 香韵文化 · 五大垂直厂牌 · 覆盖完整音乐产业链</p>
+  </div>
+</footer>
+
+<!-- ===== 合作弹窗 ===== -->
+<div class="modal-mask" id="cooperateModal">
+  <div class="modal-box">
+    <button class="modal-close-x" onclick="closeModal()">×</button>
+    <div class="modal-title">联系合作</div>
+    <div class="modal-qr">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAAFKAQAAAABTUiuoAAACBElEQVR4nO2aTYrjMBBGX40Ms7ShD2TfLMzNrKP0DaylQeabhaQknR4YZ8CJYapWUuUtPigqqh+b2Gnxx14SHHXUUUcddfRI1Kp1xWkTAKm5p8MFOPoMOkqSFrCJzTQDNhEkSfqKHiPA0WfQdE2h1N39fMu3E2l19KvFYbO3CnD0j9Y93AW5A4K+hevtWh1t0eoFJCBOYONnl0WC+9757VodrWg0M7MB7LKEEiKb2EpJ+AoBju6xklv3KdSvBmxW8+1oAY4+gVJq9FrBBwFBmgHN15MkaX67VkdbKMopV+e4tOu41KbLo3UCtEZLCwBB0OcSKM0Ao3LtnT1a50F7ibHEKAjSz/Jm6dfwIgGO7rBSZRiETDQQyWCcV2NcPso/o44U4Oi/zAkzmnupZFkcgmp12LLsPFr/Y7R1x+kjQ+qyQZcFW0ccFhlsxjifQquj13drNbuUIhCAIMZls/qMvUCAozvsllsy0oBgrcOLaGDg79Z50FbBNyu+ua8dcyvovYI/EXrbHZcuq1jqSnds0+ECHN1nD5MnabmOMVRLRM+ts6G33XGfMRsoc3nGT98dnxlNHZrLuj9Ic7/6VzRnRtsgXlqtXV8qwNG/oX0dxBOHzeyillFxeJEAR3dYfZVi6bECbVEcZNGCrDbLxwlw9Olo3ZbEDyfd+d6u1VFHHXXUUUd/A+POHAtDj4AJAAAAAElFTkSuQmCC" alt="邮箱二维码">
+    </div>
+    <div class="modal-email" id="modalEmail" onclick="this.select()">xiangyunwenhua@foxmail.com</div>
+    <div class="modal-hint">扫码可直接发送邮件，或点击下方复制</div>
+    <div class="modal-buttons">
+      <button class="modal-btn modal-btn-copy" onclick="copyEmail()">复制</button>
+      <button class="modal-btn modal-btn-cancel" onclick="closeModal()">取消</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 滚动淡入动画
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ===== 合作弹窗 =====
+  const modal = document.getElementById('cooperateModal');
+
+  function openModal() {
+    modal.classList.add('active');
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+  }
+
+  // 点击遮罩层关闭
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // ESC 键关闭
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  function copyEmail() {
+    const email = 'xiangyunwenhua@foxmail.com';
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(email).then(() => {
+        showToast('邮箱已复制：' + email);
+        closeModal();
+      }).catch(() => {
+        fallbackCopy(email);
+      });
+    } else {
+      fallbackCopy(email);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      showToast('邮箱已复制：' + text);
+      closeModal();
+    } catch (e) {
+      showToast('复制失败，请长按邮箱手动复制');
+    }
+    document.body.removeChild(textarea);
+  }
+
+  // Toast 提示
+  function showToast(msg) {
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(20, 20, 34, 0.95);
+      border: 1px solid rgba(212, 168, 83, 0.3);
+      color: #F0EDE6;
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-size: 14px;
+      z-index: 9999;
+      opacity: 0;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      white-space: nowrap;
+    `;
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    });
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(20px)';
+      setTimeout(() => toast.remove(), 300);
+    }, 2500);
+  }
+</script>
+
+</body>
+</html>
