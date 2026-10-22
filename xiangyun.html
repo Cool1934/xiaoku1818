@@ -37,7 +37,6 @@
     overflow-x: hidden;
   }
 
-  /* ===== 背景装饰 ===== */
   .bg-glow {
     position: fixed;
     top: -20%;
@@ -69,7 +68,7 @@
     z-index: 1;
   }
 
-  /* ===== Hero 区 ===== */
+  /* Hero */
   .hero {
     padding: 100px 0 80px;
     text-align: center;
@@ -115,9 +114,7 @@
     flex-wrap: wrap;
   }
 
-  .stat-item {
-    text-align: center;
-  }
+  .stat-item { text-align: center; }
 
   .stat-num {
     font-family: 'Noto Serif SC', serif;
@@ -134,7 +131,7 @@
     letter-spacing: 1px;
   }
 
-  /* ===== 分隔线 ===== */
+  /* Divider */
   .divider {
     display: flex;
     align-items: center;
@@ -157,7 +154,7 @@
     font-weight: 400;
   }
 
-  /* ===== 厂牌概览标签 ===== */
+  /* Labels Overview */
   .labels-overview {
     display: flex;
     justify-content: center;
@@ -178,9 +175,7 @@
     cursor: default;
   }
 
-  .label-chip:hover {
-    transform: translateY(-2px);
-  }
+  .label-chip:hover { transform: translateY(-2px); }
 
   .label-chip[data-color="pink"]:hover { border-color: var(--c-xiaonan); color: var(--c-xiaonan); }
   .label-chip[data-color="green"]:hover { border-color: var(--c-jinlin); color: var(--c-jinlin); }
@@ -188,7 +183,7 @@
   .label-chip[data-color="purple"]:hover { border-color: var(--c-baicheng); color: var(--c-baicheng); }
   .label-chip[data-color="orange"]:hover { border-color: var(--c-lingchuang); color: var(--c-lingchuang); }
 
-  /* ===== 厂牌卡片 ===== */
+  /* Cards */
   .labels-section {
     padding: 40px 0 80px;
   }
@@ -219,15 +214,11 @@
   }
 
   @media (min-width: 768px) {
-    .cards-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .cards-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (min-width: 1024px) {
-    .cards-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    .cards-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
   .label-card {
@@ -243,9 +234,7 @@
   .label-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 3px;
     background: var(--card-color, var(--gold));
     transform: scaleX(0);
@@ -335,31 +324,13 @@
     border: 1px solid var(--border);
   }
 
-  /* 各厂牌专属色 */
   .card-xiaonan { --card-color: var(--c-xiaonan); }
   .card-jinlin { --card-color: var(--c-jinlin); }
   .card-yemo { --card-color: var(--c-yemo); }
   .card-baicheng { --card-color: var(--c-baicheng); }
   .card-lingchuang { --card-color: var(--c-lingchuang); }
 
-  /* 最后一张卡片跨列居中 */
-  @media (min-width: 1024px) {
-    .card-lingchuang {
-      grid-column: span 3;
-      max-width: 400px;
-      justify-self: center;
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .card-lingchuang {
-      grid-column: span 2;
-      max-width: 400px;
-      justify-self: center;
-    }
-  }
-
-  /* ===== 产业链全景 ===== */
+  /* Chain */
   .chain-section {
     padding: 60px 0;
     background: linear-gradient(180deg, transparent, rgba(212, 168, 83, 0.03), transparent);
@@ -415,13 +386,7 @@
     opacity: 0.5;
   }
 
-  @media (min-width: 768px) {
-    .chain-arrow {
-      transform: rotate(0deg);
-    }
-  }
-
-  /* ===== 底部 CTA ===== */
+  /* CTA */
   .cta-section {
     padding: 80px 0 100px;
     text-align: center;
@@ -469,7 +434,7 @@
     box-shadow: 0 12px 30px rgba(212, 168, 83, 0.3);
   }
 
-  /* ===== 页脚 ===== */
+  /* Footer */
   footer {
     padding: 32px 0;
     text-align: center;
@@ -481,7 +446,7 @@
     color: var(--text-muted);
   }
 
-  /* ===== 动画 ===== */
+  /* Animations */
   .fade-up {
     opacity: 0;
     transform: translateY(20px);
@@ -501,13 +466,10 @@
     }
   }
 
-  /* ===== 模态弹窗 ===== */
+  /* Modal */
   .modal-mask {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(8px);
     z-index: 10000;
@@ -664,7 +626,7 @@
 
 <div class="container">
 
-  <!-- ===== Hero ===== -->
+  <!-- Hero -->
   <section class="hero">
     <div class="hero-badge">综合音乐文化传媒</div>
     <h1>香韵文化</h1>
@@ -688,7 +650,7 @@
     </div>
   </section>
 
-  <!-- ===== 厂牌速览 ===== -->
+  <!-- Labels Overview -->
   <div class="divider">
     <span class="divider-text">旗下厂牌</span>
   </div>
@@ -701,7 +663,7 @@
     <span class="label-chip" data-color="orange">领创互娱 · 运营推广</span>
   </div>
 
-  <!-- ===== 厂牌详细卡片 ===== -->
+  <!-- Cards -->
   <section class="labels-section">
     <div class="section-title fade-up">
       <h2>五大厂牌 · 各司其职</h2>
@@ -710,7 +672,7 @@
 
     <div class="cards-grid">
 
-      <!-- 小楠音乐 -->
+      <!-- 01 -->
       <div class="label-card card-xiaonan fade-up">
         <div class="card-number">小楠音乐 01</div>
         <div class="card-icon">
@@ -734,7 +696,7 @@
         </div>
       </div>
 
-      <!-- 锦临音乐 -->
+      <!-- 02 -->
       <div class="label-card card-jinlin fade-up">
         <div class="card-number">锦临音乐 02</div>
         <div class="card-icon">
@@ -759,7 +721,7 @@
         </div>
       </div>
 
-      <!-- 夜魔文化 -->
+      <!-- 03 -->
       <div class="label-card card-yemo fade-up">
         <div class="card-number">夜魔文化 03</div>
         <div class="card-icon">
@@ -782,7 +744,7 @@
         </div>
       </div>
 
-      <!-- 百城文化 -->
+      <!-- 04 -->
       <div class="label-card card-baicheng fade-up">
         <div class="card-number">百城文化 04</div>
         <div class="card-icon">
@@ -806,7 +768,7 @@
         </div>
       </div>
 
-      <!-- 领创互娱 -->
+      <!-- 05（紧挨 04） -->
       <div class="label-card card-lingchuang fade-up">
         <div class="card-number">领创互娱 05</div>
         <div class="card-icon">
@@ -831,7 +793,7 @@
     </div>
   </section>
 
-  <!-- ===== 产业链全景 ===== -->
+  <!-- Chain -->
   <section class="chain-section fade-up">
     <div class="section-title">
       <h2>全链路覆盖</h2>
@@ -870,7 +832,7 @@
     </div>
   </section>
 
-  <!-- ===== CTA ===== -->
+  <!-- CTA -->
   <section class="cta-section fade-up">
     <div class="cta-box">
       <h3>加入香韵，让音乐被听见</h3>
@@ -878,9 +840,7 @@
         无论你是唱作人、翻唱歌手，还是音乐爱好者，<br>
         香韵文化五大厂牌，总有一条适合你的路。
       </p>
-      <button class="cta-btn" onclick="openModal()">
-        了解合作
-      </button>
+      <button class="cta-btn" onclick="openModal()">了解合作</button>
     </div>
   </section>
 
@@ -892,7 +852,7 @@
   </div>
 </footer>
 
-<!-- ===== 合作弹窗 ===== -->
+<!-- Modal -->
 <div class="modal-mask" id="cooperateModal">
   <div class="modal-box">
     <button class="modal-close-x" onclick="closeModal()">×</button>
@@ -910,7 +870,6 @@
 </div>
 
 <script>
-  // 滚动淡入动画
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -921,7 +880,6 @@
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  // ===== 合作弹窗 =====
   const modal = document.getElementById('cooperateModal');
 
   function openModal() {
@@ -932,14 +890,12 @@
     modal.classList.remove('active');
   }
 
-  // 点击遮罩层关闭
   modal.addEventListener('click', function(e) {
     if (e.target === modal) {
       closeModal();
     }
   });
 
-  // ESC 键关闭
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && modal.classList.contains('active')) {
       closeModal();
@@ -978,7 +934,6 @@
     document.body.removeChild(textarea);
   }
 
-  // Toast 提示
   function showToast(msg) {
     const toast = document.createElement('div');
     toast.style.cssText = `
