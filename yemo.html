@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>夜魔文化 | 黑暗中的音乐力量</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>夜</text></svg>">
+<style>
+  /* ===== 基础重置 ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ec;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  /* ===== 色彩变量 ===== */
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-card-hover: #1a1a26;
+    --border: #2a2a3a;
+    --text: #e8e8ec;
+    --text-dim: #888899;
+    --accent: #a855f7;
+    --accent-dim: #7c3aed;
+    --red: #ef4444;
+    --gold: #f59e0b;
+  }
+
+  /* ===== 导航栏 ===== */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 24px;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px;
+    color: var(--text-dim);
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ===== Hero 区域 ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 24px 40px;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 40%, rgba(168, 85, 247, 0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(239, 68, 68, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 40% at 20% 60%, rgba(124, 58, 237, 0.1) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 32px;
+  }
+  .hero h1 {
+    font-size: clamp(48px, 10vw, 96px);
+    font-weight: 900;
+    letter-spacing: 12px;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    background: linear-gradient(180deg, #fff 0%, #c084fc 50%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-slogan {
+    font-size: 18px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-bottom: 48px;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-dim);
+    font-size: 12px;
+    letter-spacing: 2px;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ===== 通用区块 ===== */
+  .section {
+    padding: 80px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-title {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+  }
+  .section-title span {
+    color: var(--accent);
+  }
+  .section-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 48px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== 关于我们 ===== */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .about-text p {
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .about-text strong {
+    color: var(--text);
+  }
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .tag {
+    padding: 6px 14px;
+    background: rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--accent);
+  }
+
+  /* ===== 音乐作品 ===== */
+  .works-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .work-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .work-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(168, 85, 247, 0.15);
+  }
+  .work-cover {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .work-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 15, 0.6) 100%);
+  }
+  .cover-1 { background: linear-gradient(135deg, #1a0a2e, #4c1d95); }
+  .cover-2 { background: linear-gradient(135deg, #2d0a0a, #991b1b); }
+  .cover-3 { background: linear-gradient(135deg, #0a1a2e, #1e40af); }
+  .cover-4 { background: linear-gradient(135deg, #1a1a0a, #854d0e); }
+  .cover-5 { background: linear-gradient(135deg, #0a2e1a, #065f46); }
+  .cover-6 { background: linear-gradient(135deg, #2e0a1a, #9d174d); }
+  .work-info {
+    padding: 20px;
+  }
+  .work-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .work-type {
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .work-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ===== 艺人团队 ===== */
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .member-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .member-card:hover {
+    border-color: var(--accent);
+  }
+  .member-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+    color: #fff;
+  }
+  .member-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .member-role {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .member-bio {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ===== 服务内容 ===== */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .service-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 24px;
+    transition: all 0.3s;
+  }
+  .service-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: rgba(168, 85, 247, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .service-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent);
+  }
+  .service-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .service-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ===== 合作联系 ===== */
+  .contact-section {
+    text-align: center;
+    padding: 80px 24px;
+    background:
+      radial-gradient(ellipse 50% 60% at 50% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+  }
+  .contact-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: 4px;
+  }
+  .contact-desc {
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+  }
+  .contact-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+    color: #fff;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+  }
+  .contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+  }
+
+  /* ===== 页脚 ===== */
+  .footer {
+    padding: 32px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* ===== 响应式：平板 ===== */
+  @media (min-width: 768px) {
+    .works-grid { grid-template-columns: repeat(2, 1fr); }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+    .section-title { font-size: 44px; }
+  }
+
+  /* ===== 响应式：桌面 ===== */
+  @media (min-width: 1024px) {
+    .works-grid { grid-template-columns: repeat(3, 1fr); }
+    .team-grid { grid-template-columns: repeat(3, 1fr); }
+    .services-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ===== Toast 提示 ===== */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--bg-card);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 200;
+    transition: transform 0.3s;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 导航栏 ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo">夜魔文化</div>
+    <ul class="nav-links">
+      <li><a href="#about">关于</a></li>
+      <li><a href="#works">作品</a></li>
+      <li><a href="#team">团队</a></li>
+      <li><a href="#services">服务</a></li>
+      <li><a href="#contact">合作</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== Hero 区域 ===== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">YE MO CULTURE</div>
+    <h1>夜魔文化</h1>
+    <p class="hero-slogan">在黑暗中觉醒 用声音震动世界</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">100+</div>
+        <div class="stat-label">原创作品</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">合作艺人</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10M+</div>
+        <div class="stat-label">全网播放</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5年</div>
+        <div class="stat-label">深耕行业</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">向下滚动 ↓</div>
+</section>
+
+<!-- ===== 关于我们 ===== -->
+<section class="section" id="about">
+  <h2 class="section-title">关于<span>夜魔</span></h2>
+  <p class="section-sub">ABOUT US</p>
+  <div class="about-grid">
+    <div class="about-text">
+      <p><strong>夜魔文化</strong>成立于网络音乐浪潮之中，是一家专注于喊麦、战歌、压声等硬核音乐风格的独立音乐厂牌。</p>
+      <p>我们相信声音拥有打破黑暗的力量。从最初的地下创作，到如今拥有完整的制作、混音、封面设计团队，夜魔文化始终坚持以品质为核心，用每一个节拍、每一句歌词，传递属于我们这一代人的态度与热血。</p>
+      <p>旗下涵盖<strong>大帅工作室</strong>、<strong>香韵音乐</strong>等多个音乐品牌，与众多公会、团体保持长期合作，持续产出具有传播力的音乐作品。</p>
+      <div class="about-tags">
+        <span class="tag">喊麦</span>
+        <span class="tag">战歌</span>
+        <span class="tag">压声</span>
+        <span class="tag">古风</span>
+        <span class="tag">混音制作</span>
+        <span class="tag">封面设计</span>
+        <span class="tag">歌词创作</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <p><strong>我们的使命</strong></p>
+      <p>为每一个有梦想的声音提供舞台。无论是团体定制战歌、商业宣传配乐，还是个人原创作品，夜魔文化都以专业的制作水准，让你的声音被更多人听见。</p>
+      <p><strong>我们的风格</strong></p>
+      <p>暗黑、热血、霸气、力量感——这是夜魔文化的音乐底色。我们不讨好流量，只做能真正打动人心的作品。每一首作品都经过反复打磨，确保节奏、歌词、混音三者合一。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 音乐作品 ===== -->
+<section class="section" id="works">
+  <h2 class="section-title">代表<span>作品</span></h2>
+  <p class="section-sub">FEATURED WORKS</p>
+  <div class="works-grid">
+    <div class="work-card" onclick="showToast('作品详情即将上线')">
+      <div class="work-cover cover-1">战</div>
+      <div class="work-info">
+        <div class="work-title">北冥战歌</div>
+        <div class="work-type">团体战歌</div>
+        <div class="work-desc">为北冥咸鱼团量身打造的热血战歌，气势磅礴，节奏感强烈。</div>
+      </div>
+    </div>
+    <div class="work-card" onclick="showToast('作品详情即将上线')">
+      <div class="work-cover cover-2">枫</div>
+      <div class="work-info">
+        <div class="work-title">画枫追击</div>
+        <div class="work-type">暗黑叙事</div>
+        <div class="work-desc">犯罪题材概念单曲，暗黑曲风搭配悬疑歌词，营造独特氛围感。</div>
+      </div>
+    </div>
+    <div class="work-card" onclick="showToast('作品详情即将上线')">
+      <div class="work-cover cover-3">帝</div>
+      <div class="work-info">
+        <div class="work-title">白帝9060战歌</div>
+        <div class="work-type">公会战歌</div>
+        <div class="work-desc">白帝公会专属定制战歌，压声演绎，尽显王者霸气。</div>
+      </div>
+    </div>
+    <div class="work-card" onclick="showToast('作品详情即将上线')">
+      <div class="work-cover cover-4">鱿</div>
+      <div class="work-info">
+        <div class="work-title">李老板的鱿鱼店</div>
+        <div class="work-type">商业宣传</div>
+        <div class="work-desc">为实体店铺打造的商业宣传曲，节奏欢快，朗朗上口。</div>
+      </div>
+    </div>
+    <div class="work-card" onclick="showToast('作品详情即将上线')">
+      <div class="work-cover cover-5">神</div>
+      <div class="work-info">
+        <div class="work-title">神话公会战歌</div>
+        <div class="work-type">公会战歌</div>
+        <div class="work-desc">神话公会专属主题曲，史诗级编曲，展现公会辉煌气势。</div>
+      </div>
+    </div>
+    <div class="work-card" onclick="showToast('作品详情即将上线')">
+      <div class="work-cover cover-6">韵</div>
+      <div class="work-info">
+        <div class="work-title">香韵音乐合集</div>
+        <div class="work-type">厂牌合辑</div>
+        <div class="work-desc">香韵音乐旗下多位艺人合辑，涵盖古风、伤感、电子等多元风格。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 艺人团队 ===== -->
+<section class="section" id="team">
+  <h2 class="section-title">核心<span>团队</span></h2>
+  <p class="section-sub">CORE TEAM</p>
+  <div class="team-grid">
+    <div class="member-card">
+      <div class="member-avatar">夜</div>
+      <div class="member-name">夜魔</div>
+      <div class="member-role">主理人 / 制作人</div>
+      <div class="member-bio">夜魔文化创始人，深耕网络音乐多年，擅长喊麦作词、混音制作与视觉设计，主导厂牌全部核心项目。</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">霜</div>
+      <div class="member-name">寒霜</div>
+      <div class="member-role">DJ / 编曲</div>
+      <div class="member-bio">资深DJ与编曲人，精通电子音乐与战歌编曲，节奏把控精准，打造过众多热门战歌作品。</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">苏</div>
+      <div class="member-name">苏冉</div>
+      <div class="member-role"> vocals / 演唱</div>
+      <div class="member-bio">实力女声，声线独特，既能驾驭霸气压声，也能演绎深情伤感，是厂牌多元风格的核心 vocal。</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">帅</div>
+      <div class="member-name">大帅</div>
+      <div class="member-role">大帅工作室主理人</div>
+      <div class="member-bio">大帅工作室创始人，专注商业宣传音乐与店铺配乐，合作客户遍布各行各业。</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">香</div>
+      <div class="member-name">香韵</div>
+      <div class="member-role">香韵音乐主理人</div>
+      <div class="member-bio">香韵音乐品牌主理人，专注古风与抒情音乐方向，旗下签约多位新生代音乐人。</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">书</div>
+      <div class="member-name">白书生</div>
+      <div class="member-role">词作 / 文案</div>
+      <div class="member-bio">专职词作与文案创作，擅长古风歌词与商业文案，文字功底深厚，风格多变。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 服务内容 ===== -->
+<section class="section" id="services">
+  <h2 class="section-title">我们的<span>服务</span></h2>
+  <p class="section-sub">OUR SERVICES</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+        </svg>
+      </div>
+      <div class="service-title">原创音乐制作</div>
+      <div class="service-desc">从作词、作曲到编曲、混音全流程一站式制作，涵盖战歌、喊麦、商业配乐等多种风格。</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/>
+        </svg>
+      </div>
+      <div class="service-title">混音 / 母带处理</div>
+      <div class="service-desc">专业级混音与母带处理，让你的作品在各种播放设备上都呈现最佳音质。</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+        </svg>
+      </div>
+      <div class="service-title">封面视觉设计</div>
+      <div class="service-desc">专辑封面、单曲封面、宣传海报设计，与音乐风格统一的视觉表达，强视觉冲击力。</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+      </div>
+      <div class="service-title">歌词 / 战歌定制</div>
+      <div class="service-desc">为公会、团体、店铺量身定制专属战歌或宣传曲，包含成员名单、专属梗与品牌元素。</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <div class="service-title">艺人签约 / 孵化</div>
+      <div class="service-desc">签约有潜力的网络音乐人，提供从制作到推广的全方位孵化支持，助力艺人成长。</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>
+        </svg>
+      </div>
+      <div class="service-title">音乐发行推广</div>
+      <div class="service-desc">全网平台音乐发行与推广运营，帮助作品触达更多听众，提升曝光与影响力。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 合作联系 ===== -->
+<section class="contact-section" id="contact">
+  <h2 class="contact-title">开启你的音乐之旅</h2>
+  <p class="contact-desc">无论是团体战歌、商业配乐还是个人原创，夜魔文化都能为你打造专属声音</p>
+  <button class="contact-btn" onclick="showToast('联系方式即将上线，敬请期待')">立即合作</button>
+</section>
+
+<!-- ===== 页脚 ===== -->
+<footer class="footer">
+  <p>© 2024-2026 夜魔文化 YE MO CULTURE · 保留所有权利</p>
+</footer>
+
+<!-- Toast 提示 -->
+<div class="toast" id="toast">提示</div>
+
+<script>
+  function showToast(msg) {
+    var toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2000);
+  }
+
+  // 平滑滚动
+  document.querySelectorAll('.nav-links a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
