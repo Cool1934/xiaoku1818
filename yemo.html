@@ -644,6 +644,72 @@
     color: var(--text-dim);
   }
 
+  /* ===== 音乐播放器 ===== */
+  .player-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #0a0a10;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  .play-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .progress-wrap {
+    flex: 1;
+    height: 6px;
+    background: #2a2a3a;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    width: 0%;
+  }
+  .time-display {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: monospace;
+    min-width: 80px;
+    text-align: right;
+  }
+  .file-btns {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .file-btn {
+    padding: 8px 14px;
+    background: #0a0a10;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .file-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .username-display {
+    color: var(--accent);
+    font-size: 14px;
+  }
+
   /* ===== Toast 提示 ===== */
   .toast {
     position: fixed;
@@ -679,8 +745,9 @@
       <li><a href="#contact">合作</a></li>
     </ul>
     <div class="nav-auth">
-      <button class="btn-login" onclick="openModal('login')">登录</button>
-      <button class="btn-register" onclick="openModal('register')">注册</button>
+      <span class="username-display" id="userDisplay" style="display:none;"></span>
+      <button class="btn-login" onclick="openModal('login')" id="loginBtn">登录</button>
+      <button class="btn-register" onclick="openModal('register')" id="registerBtn">注册</button>
     </div>
   </div>
 </nav>
@@ -917,6 +984,20 @@
         <kbd>↑</kbd><kbd>↓</kbd> 切换行
       </div>
     </div>
+    <div class="file-btns">
+      <button class="file-btn" onclick="document.getElementById('musicFile').click()">导入音乐</button>
+      <button class="file-btn" onclick="document.getElementById('lrcFile').click()">导入歌词</button>
+      <input type="file" id="musicFile" accept="audio/*" style="display:none">
+      <input type="file" id="lrcFile" accept=".lrc,.txt" style="display:none">
+    </div>
+    <div class="player-bar">
+      <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+      <div class="progress-wrap" id="progressWrap" onclick="seekMusic(event)">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="time-display" id="timeDisplay">00:00 / 00:00</div>
+    </div>
+    <audio id="audioPlayer"></audio>
     <div class="lrc-lyrics" id="lrcLyrics">
       <div class="lrc-line">[00:00.00] 北风吹 战鼓擂</div>
       <div class="lrc-line">[00:03.50] 北冥男儿不怕谁</div>
@@ -1119,6 +1200,10 @@
     showToast('登录成功，欢迎 ' + account);
     closeModal();
     inputs.forEach(function(i) { i.value = ''; });
+    document.getElementById('userDisplay').textContent = '你好，' + account;
+    document.getElementById('userDisplay').style.display = 'inline';
+    document.getElementById('loginBtn').style.display = 'none';
+    document.getElementById('registerBtn').style.display = 'none';
   }
   document.getElementById('modalMask').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
@@ -1177,6 +1262,122 @@
     URL.revokeObjectURL(a.href);
     showToast('已导出 ' + filename);
   }
+
+  // ===== 音乐播放器 =====
+  var audio = document.getElementById('audioPlayer');
+  var playBtn = document.getElementById('playBtn');
+  var progressFill = document.getElementById('progressFill');
+  var timeDisplay = document.getElementById('timeDisplay');
+  var lrcData = []; // [{time:秒数, text:歌词文本}]
+
+  function parseLRC(text) {
+    var lines = text.split('\n');
+    var result = [];
+    lines.forEach(function(line) {
+      var matches = line.matchAll(/\[(\d+):(\d+\.\d+)\]/g);
+      var textOnly = line.replace(/\[\d+:\d+\.\d+\]/g, '').trim();
+      for (var m of matches) {
+        var sec = parseInt(m[1]) * 60 + parseFloat(m[2]);
+        result.push({ time: sec, text: textOnly });
+      }
+    });
+    result.sort(function(a, b) { return a.time - b.time; });
+    return result;
+  }
+
+  function loadLRCFromDOM() {
+    lrcData = [];
+    document.querySelectorAll('.lrc-line').forEach(function(line) {
+      var m = line.textContent.match(/\[(\d+):(\d+\.\d+)\]/);
+      if (m) {
+        lrcData.push({
+          time: parseInt(m[1]) * 60 + parseFloat(m[2]),
+          el: line
+        });
+      }
+    });
+  }
+  loadLRCFromDOM();
+
+  audio.addEventListener('timeupdate', function() {
+    var cur = audio.currentTime;
+    var pct = (cur / audio.duration) * 100 || 0;
+    progressFill.style.width = pct + '%';
+    timeDisplay.textContent = fmtTime(cur) + ' / ' + fmtTime(audio.duration);
+    // 自动匹配歌词
+    var activeIdx = -1;
+    for (var i = 0; i < lrcData.length; i++) {
+      if (cur >= lrcData[i].time) activeIdx = i;
+    }
+    if (activeIdx >= 0 && activeIdx !== lrcCurrent) {
+      lrcCurrent = activeIdx;
+      lrcUpdate();
+    }
+  });
+
+  function fmtTime(s) {
+    if (!s) return '00:00';
+    var m = Math.floor(s / 60);
+    var sec = Math.floor(s % 60);
+    return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
+  function togglePlay() {
+    if (!audio.src) return showToast('请先导入音乐文件');
+    if (audio.paused) {
+      audio.play();
+      playBtn.textContent = '⏸';
+    } else {
+      audio.pause();
+      playBtn.textContent = '▶';
+    }
+  }
+
+  function seekMusic(e) {
+    if (!audio.duration) return;
+    var rect = e.currentTarget.getBoundingClientRect();
+    var pct = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pct * audio.duration;
+  }
+
+  // 导入音乐
+  document.getElementById('musicFile').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    audio.src = URL.createObjectURL(file);
+    showToast('已加载音乐：' + file.name);
+  });
+
+  // 导入歌词
+  document.getElementById('lrcFile').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      var lines = ev.target.result.split('\n').filter(function(l) {
+        return l.trim() && l.match(/\[\d+:\d+\.\d+\]/);
+      });
+      var box = document.getElementById('lrcLyrics');
+      box.innerHTML = '';
+      lines.forEach(function(line) {
+        var div = document.createElement('div');
+        div.className = 'lrc-line';
+        div.textContent = line;
+        div.addEventListener('click', function() {
+          var idx = Array.from(box.children).indexOf(this);
+          lrcCurrent = idx;
+          lrcUpdate();
+        });
+        box.appendChild(div);
+      });
+      lrcLines = document.querySelectorAll('.lrc-line');
+      lrcCurrent = 0;
+      loadLRCFromDOM();
+      lrcUpdate();
+      showToast('已导入歌词：' + file.name);
+    };
+    reader.readAsText(file);
+  });
 
   // 平滑滚动
   document.querySelectorAll('.nav-links a').forEach(function(link) {
