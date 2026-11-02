@@ -110,7 +110,7 @@
 <script>
 // ========== 改成你自己的配置 ==========
 const API_URL = "https://console.cloud.tencent.com/tokenhub/apikey";
-const API_KEY = "ak-20261102-748518ee533670c8e6a5a2cdc4ff871e";
+const API_KEY = "sk-tMcLv3s0GltdWTAiJ7g1CTolcfyeZSxptOfuSAvkK8sKdpWS";
 const MODEL = "hunyuan-pro";
 // ====================================
 
@@ -145,8 +145,8 @@ function setTyping() {
 async function send() {
   const text = inputEl.value.trim();
   if (!text || sendBtn.disabled) return;
-  if (API_KEY === "sk-tMcLv3s0GltdWTAiJ7g1CTolcfyeZSxptOfuSAvkK8sKdpWS") {
-    alert("sk-tMcLv3s0GltdWTAiJ7g1CTolcfyeZSxptOfuSAvkK8sKdpWS");
+  if (API_KEY === "") {
+    alert("");
     return;
   }
   addMsg("user", text);
