@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" type="image/x-icon" href="0c3d410f3f40eeced3e3eca7af7d8df6.ico">
-<title>小酷 AI 聊天助手</title>
+<title>元宝 AI 聊天助手</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { height: 100%; }
@@ -36,7 +35,7 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    background: linear-gradient(135deg, #0052d9, #00a870);
     color: #fff;
   }
   .avatar {
@@ -59,11 +58,11 @@
     white-space: pre-wrap; word-break: break-word; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
   .msg.user { align-self: flex-end; flex-direction: row-reverse; }
-  .msg.user .bubble { background: linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff; border-top-right-radius: 6px; }
+  .msg.user .bubble { background: linear-gradient(135deg,#0052d9,#00a870); color:#fff; border-top-right-radius: 6px; }
   .msg.ai .bubble { background:#fff; color:#1f2937; border:1px solid #eef1f5; border-top-left-radius: 6px; }
   .msg .icon { width:32px; height:32px; flex:none; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:15px; }
   .msg.user .icon { background:#eef2ff; }
-  .msg.ai .icon { background:linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff; }
+  .msg.ai .icon { background:linear-gradient(135deg,#0052d9,#00a870); color:#fff; }
 
   .typing { display:inline-flex; gap:4px; align-items:center; }
   .typing span { width:6px; height:6px; background:#9ca3af; border-radius:50%; animation: blink 1.2s infinite; }
@@ -78,11 +77,11 @@
     border:1px solid #e5e7eb; border-radius:14px; outline:none; transition: border .2s, box-shadow .2s;
     background:#fafbff;
   }
-  textarea:focus { border-color:#7c3aed; box-shadow:0 0 0 3px rgba(124,58,237,0.15); }
+  textarea:focus { border-color:#0052d9; box-shadow:0 0 0 3px rgba(0,82,217,0.15); }
   button.send {
     height:46px; padding:0 22px; border:none; border-radius:14px; cursor:pointer; font-size:15px; font-weight:600;
-    color:#fff; background:linear-gradient(135deg,#4f46e5,#7c3aed);
-    box-shadow:0 6px 16px rgba(79,70,229,0.3); transition: transform .15s, opacity .2s;
+    color:#fff; background:linear-gradient(135deg,#0052d9,#00a870);
+    box-shadow:0 6px 16px rgba(0,82,217,0.3); transition: transform .15s, opacity .2s;
   }
   button.send:hover { transform: translateY(-1px); }
   button.send:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
@@ -92,10 +91,10 @@
 <body>
 <div class="app">
   <div class="header">
-    <div class="avatar">酷</div>
+    <div class="avatar">元</div>
     <div>
-      <h1>小酷 AI 聊天助手</h1>
-      <p>由 glm-4-flash 驱动 · 多轮对话</p>
+      <h1>元宝 AI 聊天助手</h1>
+      <p>由 Hunyuan 驱动 · 多轮对话</p>
     </div>
   </div>
   <div class="chat" id="chat"></div>
@@ -104,14 +103,16 @@
       <textarea id="input" placeholder="输入你的问题，Enter 发送，Shift+Enter 换行" rows="1"></textarea>
       <button class="send" id="send">发送</button>
     </div>
-    <div class="hint">提示：企业安全在小酷ai</div>
+    <div class="hint">提示：企业安全在元宝 AI</div>
   </div>
 </div>
 
 <script>
-const API_URL = "https://open.bigmodel.cn/api/paas/v4/chat/completions";
-const API_KEY = "341a2ef8f37147e093047f63a67d877f.d1PUFoy5YII2749q"; // ← 替换为你的 Key
-const MODEL = "glm-4-flash";
+// ========== 改成你自己的配置 ==========
+const API_URL = "https://console.cloud.tencent.com/tokenhub/apikey";
+const API_KEY = "ak-20261102-748518ee533670c8e6a5a2cdc4ff871e";
+const MODEL = "hunyuan-pro";
+// ====================================
 
 const chatEl = document.getElementById("chat");
 const inputEl = document.getElementById("input");
@@ -124,7 +125,7 @@ const messages = [
 function addMsg(role, text) {
   const wrap = document.createElement("div");
   wrap.className = "msg " + role;
-  const icon = role === "user" ? "我" : "酷";
+  const icon = role === "user" ? "我" : "元";
   wrap.innerHTML = `<div class="icon">${icon}</div>
     <div class="bubble">${text}</div>`;
   chatEl.appendChild(wrap);
@@ -135,7 +136,7 @@ function addMsg(role, text) {
 function setTyping() {
   const wrap = document.createElement("div");
   wrap.className = "msg ai";
-  wrap.innerHTML = `<div class="icon">酷</div><div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;
+  wrap.innerHTML = `<div class="icon">元</div><div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;
   chatEl.appendChild(wrap);
   chatEl.scrollTop = chatEl.scrollHeight;
   return wrap;
@@ -144,8 +145,8 @@ function setTyping() {
 async function send() {
   const text = inputEl.value.trim();
   if (!text || sendBtn.disabled) return;
-  if (API_KEY === "你的智谱AI_API_KEY") {
-    alert("链接有吴");
+  if (API_KEY === "sk-tMcLv3s0GltdWTAiJ7g1CTolcfyeZSxptOfuSAvkK8sKdpWS") {
+    alert("sk-tMcLv3s0GltdWTAiJ7g1CTolcfyeZSxptOfuSAvkK8sKdpWS");
     return;
   }
   addMsg("user", text);
@@ -187,8 +188,7 @@ inputEl.addEventListener("input", () => {
   inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + "px";
 });
 
-// 欢迎语
-addMsg("ai", "你好，我是小酷 AI 助手 🤖\n有什么我可以帮你的吗？");
+addMsg("ai", "你好，我是元宝 AI 助手 🤖\n有什么我可以帮你的吗？");
 </script>
 </body>
 </html>
